@@ -17,7 +17,7 @@ import util.Util;
  */
 public class UsersDAO {
     private final SessionFactory sessionFactory;
-    Session session;
+    private Session session;
 
     public UsersDAO() {//без параметров сделать, конфигурацию из утила получать
         this.sessionFactory = createSessionFactory(Util.getInstance().getH2Configuration());

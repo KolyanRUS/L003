@@ -19,12 +19,13 @@ public class SignInServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
+        String pass = request.getParameter("password");
         if (login == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        User usprofile = dao.getUserId_hql(login);//dbbService.getUser(login);
+        User usprofile = dao.getUserId_hql(login,pass);//dbbService.getUser(login);
         if(usprofile == null) {
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Unauthorized");

@@ -21,7 +21,7 @@ public class UsersDAO {
 
     public UsersDAO() {//без параметров сделать, конфигурацию из утила получать
         this.sessionFactory = createSessionFactory(Util.getInstance().getH2Configuration());
-}
+    }
 
     public User get(long id) throws HibernateException {
         session = sessionFactory.openSession();
@@ -37,24 +37,36 @@ public class UsersDAO {
         return (User) query.uniqueResult();
     }
 
-    public User getUserId(String login) throws HibernateException {
-        session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(User.class);
-        session.close();
-        return (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
+    public User getUserId(String login, String password) throws HibernateException {
+        try {
+            session = sessionFactory.openSession();
+            Criteria criteria = session.createCriteria(User.class);
+            session.close();
+            User us = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
+            if (us.getPassword()!=password) {
+                throw new Throwable();
+            }
+            return us;
+        } catch (Throwable t) {
+            return null;
+        }
         //Restrictions - ограничения
         //uniqueResult - уникальный результат запроса, если запрос выдаёт >1 результатов, то
-            //кидается исключение NonUniqueResultException
+        //кидается исключение NonUniqueResultException
     }
 
-    public User getUserId_hql(String login) throws HibernateException {
+    public User getUserId_hql(String login, String password) throws HibernateException {
         try {
             String hql = "FROM User where login = :paramName";
             Query query = session.createQuery(hql);
             query.setParameter("paramName", login);
-            return (User) query.uniqueResult();
+            User us = (User) query.uniqueResult();
+            if (us.getPassword()!=password) {
+                throw new Throwable();
+            }
+            return us;
         } catch (Throwable t) {
-           return null;
+            return null;
         }
     }
 

@@ -1,6 +1,6 @@
 package dao;
 
-import Entity.User;
+import entity.User;
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -17,13 +17,10 @@ import util.Util;
  */
 public class UsersDAO {
     private final SessionFactory sessionFactory;
-    Configuration configuration;
     Session session;
 
-
     public UsersDAO() {//без параметров сделать, конфигурацию из утила получать
-        this.configuration = Util.getInstance().getH2Configuration();
-        this.sessionFactory = createSessionFactory(configuration);
+        this.sessionFactory = createSessionFactory(Util.getInstance().getH2Configuration());
 }
 
     public User get(long id) throws HibernateException {
@@ -58,11 +55,15 @@ public class UsersDAO {
     }
 
     public void insertUser(String login, String password) throws HibernateException {
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        long id = (Long) session.save(new User(-1,login,password));
-        transaction.commit();
-        session.close();
+        try {
+            session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            long id = (Long) session.save(new User(-1, login, password));
+            transaction.commit();
+            session.close();
+        } catch (Throwable t) {
+            //ignore
+        }
     }
 
     private static SessionFactory createSessionFactory(Configuration configuration) {

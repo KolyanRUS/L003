@@ -1,16 +1,11 @@
 package main;
 
-//import accounts.AccountService;
-//import accounts.UserProfile;
-import dao.UsersDAO;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-//import servlets.SessionsServlet;
-import servlets.SignInServlet;
-import servlets.SignUpServlet;
-//import servlets.UsersServlet;
-import util.*;
+import servlet.SignInServlet;
+import servlet.SignUpServlet;
+
 
 /**
  * @author v.chibrikov

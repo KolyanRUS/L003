@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings("UnusedDeclaration")
 @Entity
 @Table(name = "users")
-public class User implements Serializable { // Serializable Important to Hibernate!
+public class User {
     private static final long serialVersionUID = -8706689714326132798L;
 
     @Id

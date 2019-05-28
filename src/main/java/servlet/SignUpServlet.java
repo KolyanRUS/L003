@@ -1,6 +1,4 @@
-package servlets;
-import dao.DBException;
-import Entity.User;
+package servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,31 +8,23 @@ import java.io.IOException;
 
 import dao.UsersDAO;
 
-public class SignInServlet extends HttpServlet {
+public class SignUpServlet extends HttpServlet {
     private UsersDAO dao;
-    public SignInServlet() {
+    public SignUpServlet() {
         this.dao = new UsersDAO();
     }
-//[sign up = регистрация]
-    //sign in//вход
+    //sign up//регистрация
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
+        String pass = request.getParameter("pass");
+
         if (login == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        try{
-            User usprofile = dao.getUserId_hql(login);//dbbService.getUser(login);
-        } catch (Throwable t) {
-            response.setContentType("text/html;charset=utf-8");
-            response.getWriter().println("Unauthorized");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-        response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println("Authorized: "+login);
+        dao.insertUser(login,pass);
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }

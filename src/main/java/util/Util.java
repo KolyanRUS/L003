@@ -1,6 +1,6 @@
 package util;
 
-import Entity.User;
+import entity.User;
 import org.hibernate.cfg.Configuration;
 
 public class Util {

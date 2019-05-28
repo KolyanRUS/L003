@@ -55,15 +55,12 @@ public class UsersDAO {
         //кидается исключение NonUniqueResultException
     }
 
-    public User getUserId_hql(String login, String password) throws HibernateException {
+    public User getUserId_hql(String login) throws HibernateException {
         try {
             String hql = "FROM User where login = :paramName";
             Query query = session.createQuery(hql);
             query.setParameter("paramName", login);
             User us = (User) query.uniqueResult();
-            if (us.getPassword()!=password) {
-                throw new Throwable();
-            }
             return us;
         } catch (Throwable t) {
             return null;

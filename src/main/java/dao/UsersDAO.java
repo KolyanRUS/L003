@@ -37,15 +37,12 @@ public class UsersDAO {
         return (User) query.uniqueResult();
     }
 
-    public User getUserId(String login, String password) throws HibernateException {
+    public User getUserId(String login) throws HibernateException {
         try {
             session = sessionFactory.openSession();
             Criteria criteria = session.createCriteria(User.class);
             session.close();
             User us = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
-            if (us.getPassword()!=password) {
-                throw new Throwable();
-            }
             return us;
         } catch (Throwable t) {
             return null;

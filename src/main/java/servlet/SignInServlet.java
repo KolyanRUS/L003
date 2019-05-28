@@ -26,7 +26,7 @@ public class SignInServlet extends HttpServlet {
             return;
         }
         User usprofile = dao.getUserId_hql(login);//dbbService.getUser(login);
-        if(usprofile == null || usprofile.getPassword() != pass) {
+        if(usprofile == null || !usprofile.getPassword().equals(pass)) {
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Unauthorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

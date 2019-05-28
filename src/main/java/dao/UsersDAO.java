@@ -48,10 +48,14 @@ public class UsersDAO {
     }
 
     public User getUserId_hql(String login) throws HibernateException {
-        String hql = "FROM User where login = :paramName";
-        Query query = session.createQuery(hql);
-        query.setParameter("paramName", login);
-        return (User) query.uniqueResult();
+        try {
+            String hql = "FROM User where login = :paramName";
+            Query query = session.createQuery(hql);
+            query.setParameter("paramName", login);
+            return (User) query.uniqueResult();
+        } catch (Throwable t) {
+           return null;
+        }
     }
 
     public void insertUser(String login, String password) throws HibernateException {

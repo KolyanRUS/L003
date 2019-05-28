@@ -24,9 +24,8 @@ public class SignInServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        try{
-            User usprofile = dao.getUserId_hql(login);//dbbService.getUser(login);
-        } catch (Throwable t) {
+        User usprofile = dao.getUserId_hql(login);//dbbService.getUser(login);
+        if(usprofile == null) {
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Unauthorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
